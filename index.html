@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MoCurse — The home of Minecraft creations</title>
+<meta name="description" content="Discover mods, modpacks, worlds, shaders and resource packs. MoCurse is an unofficial community platform for Minecraft creators.">
+<style>
+:root{color-scheme:dark;--bg:#0B0A12;--bg2:#12101C;--card:#181526;--elev:#201B32;--p:#A855F7;--p2:#C084FC;--pd:#7C3AED;--lav:#DDD6FE;--tx:#F8F7FF;--tx2:#A6A1B5;--bd:#302941;--ok:#34D399;--err:#FB7185;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Inter,Geist,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--p2);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+.grad{background:linear-gradient(135deg,var(--p2),var(--pd));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:12px 22px;font-weight:600;border:1px solid transparent;transition:transform .2s,box-shadow .2s,background .2s}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;box-shadow:0 0 24px rgba(168,85,247,.35)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 0 34px rgba(168,85,247,.55)}
+.btn-o{border-color:var(--bd);background:rgba(24,21,38,.6)}
+.btn-o:hover{border-color:var(--p);background:var(--elev)}
+.btn-sm{padding:8px 14px;font-size:14px;border-radius:10px}
+/* nav */
+nav.top{position:sticky;top:0;z-index:50;background:rgba(11,10,18,.8);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd)}
+.nav{display:flex;align-items:center;gap:20px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.02em}
+.links{display:flex;gap:4px;margin-left:12px}
+.links a{padding:8px 12px;border-radius:8px;color:var(--tx2);font-size:14px;font-weight:500;transition:.2s}
+.links a:hover,.links a.on{color:var(--tx);background:var(--elev)}
+.sp{flex:1}
+.burger{display:none;background:none;border:1px solid var(--bd);border-radius:10px;padding:8px 10px}
+.panel{position:fixed;inset:0 0 0 auto;width:min(320px,86vw);background:var(--bg2);border-left:1px solid var(--bd);z-index:80;transform:translateX(100%);transition:transform .3s;padding:20px;display:flex;flex-direction:column;gap:6px;padding-top:calc(20px + env(safe-area-inset-top,0px))}
+.panel.open{transform:none}
+.panel a{padding:12px;border-radius:10px;color:var(--tx2)}
+.panel a:hover{background:var(--elev);color:var(--tx)}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;opacity:0;pointer-events:none;transition:.3s}
+.scrim.open{opacity:1;pointer-events:auto}
+/* hero */
+.hero{position:relative;text-align:center;padding:84px 0 72px;overflow:hidden;isolation:isolate;border-bottom:1px solid var(--bd)}
+.hero::before{content:"";position:absolute;inset:0;z-index:-2;
+background:
+ linear-gradient(135deg,transparent 48%,rgba(48,41,65,.55) 48%,rgba(48,41,65,.55) 52%,transparent 52%) 0 0/72px 72px,
+ linear-gradient(45deg,transparent 48%,rgba(32,27,50,.9) 48%,rgba(32,27,50,.9) 52%,transparent 52%) 0 0/72px 72px,var(--bg2)}
+.hero::after{content:"";position:absolute;left:50%;top:-20%;width:900px;height:700px;margin-left:-450px;z-index:-1;background:radial-gradient(closest-side,rgba(168,85,247,.38),transparent);animation:drift 12s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(8%,10%) scale(1.15)}}
+.logo-big{filter:drop-shadow(0 0 28px rgba(168,85,247,.6));margin-bottom:28px}
+h1{font-size:clamp(38px,7vw,76px);line-height:1.05;letter-spacing:-.03em;margin:0 0 20px;font-weight:800}
+.lead{max-width:640px;margin:0 auto 32px;color:var(--tx2);font-size:clamp(16px,2vw,19px)}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.search{max-width:720px;margin:-28px auto 0;position:relative;z-index:5;padding:0 20px}
+.sbox{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:0 16px;box-shadow:0 12px 40px rgba(0,0,0,.5);transition:border-color .2s}
+.sbox:focus-within{border-color:var(--p)}
+.sbox input{flex:1;min-width:0;background:none;border:0;color:var(--tx);font:inherit;padding:18px 0;outline:0}
+kbd{font:12px ui-monospace,monospace;border:1px solid var(--bd);border-bottom-width:2px;border-radius:6px;padding:2px 8px;color:var(--tx2);background:var(--bg2)}
+/* sections */
+section.s{padding:72px 0 0}
+.sh{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+h2{margin:0;font-size:clamp(24px,3.5vw,34px);letter-spacing:-.02em}
+.sub{color:var(--tx2);margin:4px 0 0}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{background:var(--card);border:1px solid var(--bd);border-radius:999px;padding:7px 16px;font-size:14px;color:var(--tx2);transition:.2s}
+.tab:hover{border-color:var(--p)}
+.tab[aria-pressed=true]{background:linear-gradient(135deg,var(--p),var(--pd));border-color:transparent;color:#fff}
+select{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;font:inherit;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);border-color:var(--p);box-shadow:0 14px 34px rgba(124,58,237,.22)}
+.thumb{height:130px;position:relative;image-rendering:pixelated}
+.thumb span{position:absolute;top:10px;left:10px}
+.fav{position:absolute;top:8px;right:8px;width:34px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(11,10,18,.6);display:grid;place-items:center}
+.fav[aria-pressed=true]{color:var(--err);border-color:var(--err)}
+.cb{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.cb h3{margin:0;font-size:17px;display:flex;align-items:center;gap:6px}
+.by{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--tx2)}
+.av{width:22px;height:22px;border-radius:6px;display:inline-grid;place-items:center;font-size:11px;font-weight:700;color:#fff}
+.cb p{margin:0;color:var(--tx2);font-size:14px}
+.badges{display:flex;flex-wrap:wrap;gap:6px}
+.bdg{font-size:12px;font-weight:600;border-radius:6px;padding:2px 8px;background:var(--elev);border:1px solid var(--bd);color:var(--lav)}
+.bdg.t{background:rgba(168,85,247,.18);border-color:rgba(168,85,247,.5);color:var(--p2)}
+.meta{display:flex;justify-content:space-between;margin-top:auto;font-size:13px;color:var(--tx2);padding-top:10px;border-top:1px solid var(--bd)}
+.demo{font-size:12px;color:var(--tx2);margin-top:14px}
+.empty{grid-column:1/-1;text-align:center;padding:48px;border:1px dashed var(--bd);border-radius:16px;color:var(--tx2)}
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.cat{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px;transition:.25s;display:block}
+.cat:hover{border-color:var(--p);transform:translateY(-3px);background:var(--elev)}
+.cat i{display:block;width:48px;height:48px;border-radius:12px;margin-bottom:14px}
+.cat b{display:block;font-size:16px}.cat small{color:var(--tx2)}
+.cre{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.cc{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.cc .av{width:52px;height:52px;font-size:20px;border-radius:14px}
+.cc p{margin:0;color:var(--tx2);font-size:14px}
+.cc .meta{border:0;padding:0}
+.promo{margin-top:72px;text-align:center;border:1px solid var(--bd);border-radius:24px;padding:64px 24px;background:radial-gradient(600px 240px at 50% 0,rgba(168,85,247,.3),transparent),var(--card)}
+.promo p{max-width:560px;margin:12px auto 28px;color:var(--tx2)}
+footer{margin-top:72px;border-top:1px solid var(--bd);background:var(--bg2);padding:48px 0 32px}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px}
+footer h4{margin:0 0 12px;font-size:14px}
+footer a{display:block;color:var(--tx2);font-size:14px;padding:3px 0}footer a:hover{color:var(--p2)}
+.legal{margin-top:32px;padding-top:20px;border-top:1px solid var(--bd);font-size:13px;color:var(--tx2)}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--elev);border:1px solid var(--p);border-radius:12px;padding:12px 18px;opacity:0;pointer-events:none;transition:.3s;z-index:100}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.links,.nav .hide-m{display:none}.burger{display:block}.fg{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.hero{padding-top:56px}.fg{grid-template-columns:1fr}kbd{display:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:middle}
+.i-md{width:20px;height:20px}.i-lg{width:28px;height:28px;stroke-width:1.8}
+.links a{display:inline-flex;align-items:center;gap:8px}
+.panel a{display:flex;align-items:center;gap:12px}
+.panel .pclose{align-self:flex-end;background:none;border:1px solid var(--bd);border-radius:10px;padding:8px;display:grid;place-items:center;margin-bottom:8px;color:var(--tx)}
+.sign{display:inline-flex;align-items:center;gap:6px}
+.burger{place-items:center}
+.sbox>.i{color:var(--lav)}
+.sbox:focus-within{box-shadow:0 0 0 3px rgba(168,85,247,.25),0 12px 40px rgba(0,0,0,.5)}
+.cat i{display:grid;place-items:center;color:#F3EEFF;background:linear-gradient(135deg,rgba(168,85,247,.55),rgba(124,58,237,.22));border:1px solid rgba(192,132,252,.35);border-radius:13px;transition:box-shadow .25s,transform .25s}
+.cat:hover i{box-shadow:0 0 22px rgba(168,85,247,.5);transform:scale(1.05)}
+.meta span,.cc b{display:inline-flex;align-items:center;gap:5px}
+.meta .i{width:15px;height:15px;color:var(--p2)}
+.fav{color:var(--tx)}.fav[aria-pressed=true] .i{fill:currentColor}
+.vf{color:var(--p2);display:inline-flex}
+@media(max-width:900px){.nav .hide-m{display:none!important}.burger{display:grid}}
+.i-xl{width:44px;height:44px;stroke-width:1.6}
+#grid.grid{grid-template-columns:1fr;gap:12px}
+.pc{display:flex;gap:18px;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;transition:border-color .2s,box-shadow .2s,transform .2s}
+.pc:hover{border-color:rgba(168,85,247,.6);box-shadow:0 8px 28px rgba(124,58,237,.18);transform:translateY(-2px)}
+.pi{width:96px;height:96px;border-radius:16px;flex:none;display:grid;place-items:center;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),0 4px 14px rgba(0,0,0,.35)}
+.pm{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.pt{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px}.pt h3{margin:0;font-size:18px}
+.by2{color:var(--tx2);font-size:14px}
+.pm p{margin:0;color:var(--tx2);font-size:14px}
+.tags{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:auto}
+.tg{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--tx2)}.tg .i{width:15px;height:15px;color:var(--p2)}
+.ps{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:13px;color:var(--tx2);min-width:150px}
+.ps .st{display:inline-flex;align-items:center;gap:6px}.ps .st .i{width:16px;height:16px;color:var(--p2)}.ps b{color:var(--tx);font-size:15px}
+.pc .fav{position:static;margin-top:auto;border-color:var(--bd);background:var(--elev);color:var(--tx)}
+.pc .fav:hover{border-color:var(--p)}
+@media(max-width:700px){.pc{flex-wrap:wrap;gap:14px}.pi{width:72px;height:72px}.i-xl{width:32px;height:32px}.pm{flex:1 1 calc(100% - 90px)}.ps{flex-direction:row;flex-wrap:wrap;align-items:center;min-width:0;width:100%;gap:6px 16px}.pc .fav{margin:0 0 0 auto}}
+.lay{display:grid;grid-template-columns:240px 1fr;gap:24px;align-items:start}.lay>div{min-width:0}
+.side{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:18px;position:sticky;top:80px;display:flex;flex-direction:column;gap:16px}
+.sth{margin:0;display:flex;align-items:center;gap:8px;font-size:16px}
+.fs{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:4px}
+.fs legend{font-size:13px;font-weight:700;color:var(--lav);margin-bottom:6px;padding:0}
+.ck{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--tx2);cursor:pointer;padding:3px 0}.ck:hover{color:var(--tx)}.ck span{flex:1}.ck em{font-style:normal;font-size:12px}.ck input{accent-color:var(--p);width:16px;height:16px}
+.rbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;color:var(--tx2);font-size:14px}.rbar b{color:var(--tx)}.rbar .sp{flex:1}.fbtn{display:none}
+.pager{display:flex;gap:8px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+@media(max-width:900px){.lay{grid-template-columns:1fr}.side{display:none;position:static}.side.open{display:flex}.fbtn{display:inline-flex}}
+dialog{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:20px;padding:24px;width:min(520px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.65)}
+#pf{display:flex;flex-direction:column;gap:12px}#pf h2{margin:0}#pf .sub{margin:0}
+#pf label{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--tx2)}
+#pf input,#pf textarea{background:var(--bg2);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:10px;font:inherit}
+#pf .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#pf .row{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="logo" viewBox="0 0 64 64"><path d="M32 4 56 18v28L32 60 8 46V18z" fill="none" stroke="#A855F7" stroke-width="5" stroke-linejoin="round"/><path d="M32 4v28M8 18l24 14 24-14" stroke="#C084FC" stroke-width="4" fill="none" stroke-linejoin="round"/><rect x="26" y="38" width="12" height="12" fill="#7C3AED"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></symbol>
+<symbol id="i-puzzle" viewBox="0 0 24 24"><path d="M19.439 7.85c-.049.322.059.648.289.878l1.568 1.568c.47.47.706 1.087.706 1.704s-.235 1.233-.706 1.704l-1.611 1.611a.98.98 0 0 1-.837.276c-.47-.07-.802-.48-.968-.925a2.501 2.501 0 1 0-3.214 3.214c.446.166.855.497.925.968a.979.979 0 0 1-.276.837l-1.61 1.61a2.404 2.404 0 0 1-1.705.707 2.402 2.402 0 0 1-1.704-.706l-1.568-1.568a1.026 1.026 0 0 0-.877-.29c-.493.074-.84.504-1.02.968a2.5 2.5 0 1 1-3.237-3.237c.464-.18.894-.527.967-1.02a1.026 1.026 0 0 0-.289-.877l-1.568-1.568A2.402 2.402 0 0 1 1.998 12c0-.617.236-1.234.706-1.704L4.23 8.77c.24-.24.581-.353.917-.303.515.077.877.528 1.073 1.01a2.5 2.5 0 1 0 3.259-3.259c-.482-.196-.933-.558-1.01-1.073-.05-.336.062-.676.303-.917l1.525-1.525A2.402 2.402 0 0 1 12 1.998c.617 0 1.234.236 1.704.706l1.568 1.568c.23.23.556.338.877.29.493-.074.84-.504 1.02-.968a2.5 2.5 0 1 1 3.236 3.236c-.464.18-.894.527-.967 1.02Z"/></symbol>
+<symbol id="i-package" viewBox="0 0 24 24"><path d="m7.5 4.27 9 5.15M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16ZM3.3 7 12 12l8.7-5M12 22V12"/></symbol>
+<symbol id="i-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-17.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+<symbol id="i-mountain" viewBox="0 0 24 24"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></symbol>
+<symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 6h.01M6 18h.01"/></symbol>
+<symbol id="i-log-in" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-badge-check" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-arrow-up-down" viewBox="0 0 24 24"><path d="m21 16-4 4-4-4M17 20V4M3 8l4-4 4 4M7 4v16"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-user-plus" viewBox="0 0 24 24"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="M19 16v6M22 19h-6"/></symbol>
+<symbol id="i-sliders-horizontal" viewBox="0 0 24 24"><path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/></symbol>
+<symbol id="i-user-round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+</defs></svg>
+
+<nav class="top" aria-label="Main"><div class="wrap nav">
+<a class="brand" href="#"><svg width="32" height="32" aria-hidden="true"><use href="#logo"/></svg>MoCurse</a>
+<div class="links" id="links"></div>
+<div class="sp"></div>
+<a class="hide-m sign" href="#" style="color:var(--tx2);font-weight:500"><svg class="i i-md" aria-hidden="true"><use href="#i-log-in"/></svg>Sign in</a>
+<a class="btn btn-p btn-sm hide-m" href="#"><svg class="i" aria-hidden="true"><use href="#i-upload"/></svg>Publish content</a>
+<button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><svg class="i i-md" aria-hidden="true"><use href="#i-menu"/></svg></button>
+</div></nav>
+<div class="scrim" id="scrim"></div>
+<aside class="panel" id="panel" aria-label="Menu">
+<a href="#trending">Discover</a><a href="#trending">Mods</a><a href="#trending">Modpacks</a><a href="#trending">Resource Packs</a><a href="#trending">Shaders</a><a href="#trending">Worlds</a><a href="#">Servers</a><a href="#">Sign in</a>
+<a class="btn btn-p" href="#" style="margin-top:10px;color:#fff;justify-content:center">Publish content</a>
+</aside>
+
+<header class="hero"><div class="wrap">
+<svg class="logo-big" width="96" height="96" role="img" aria-label="MoCurse logo"><use href="#logo"/></svg>
+<h1>The home of Minecraft<br><span class="grad">creations.</span></h1>
+<p class="lead">Discover mods, explore new worlds, transform your textures, and share your creations with a community built around Minecraft.</p>
+<div class="cta"><a class="btn btn-p" href="#trending"><svg class="i i-md" aria-hidden="true"><use href="#i-compass"/></svg>Explore content</a><a class="btn btn-o" href="#"><svg class="i i-md" aria-hidden="true"><use href="#i-upload"/></svg>Start creating</a></div>
+</div></header>
+
+<div class="search"><label class="sbox"><svg class="i i-md" aria-hidden="true"><use href="#i-search"/></svg><span class="sr" style="position:absolute;left:-9999px">Search</span>
+<input id="q" type="search" placeholder="Search mods, modpacks, worlds, shaders, resource packs..." autocomplete="off"><kbd>/</kbd></label></div>
+
+<main class="wrap">
+<section class="s" id="trending">
+<div class="sh"><div><h2>Trending <span class="grad">content</span></h2><p class="sub">Popular this week</p></div>
+<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><label for="sort" style="color:var(--tx2);font-size:14px;display:inline-flex;align-items:center;gap:6px"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-down"/></svg>Sort</label>
+<select id="sort"><option value="rel">Relevance</option><option value="dl">Downloads</option><option value="up">Recently updated</option></select></div></div>
+<div class="tabs" id="tabs" role="group" aria-label="Filter by type" style="margin-bottom:20px"></div>
+<div class="lay"><aside class="side" id="side" aria-label="Filters"></aside><div><div class="rbar" id="rbar"></div><div class="grid" id="grid" aria-live="polite"></div><div class="pager" id="pager"></div></div></div>
+<p class="demo">All projects, creators and statistics shown here are fictional demo data, not real community content.</p>
+</section>
+
+<section class="s"><div class="sh"><div><h2>Browse by category</h2></div></div>
+<div class="cats" id="cats"></div></section>
+
+<section class="s"><div class="sh"><div><h2>Featured creators</h2><p class="sub">Demo profiles</p></div></div>
+<div class="cre" id="cre"></div></section>
+
+<div class="promo"><h2>Made something <span class="grad">amazing?</span></h2>
+<p>Share your creations with thousands of Minecraft players and help shape the next generation of Minecraft experiences.</p>
+<div class="cta"><a class="btn btn-p" href="#">Publish a project</a><a class="btn btn-o" href="#">Join the community</a></div></div>
+</main>
+
+<footer><div class="wrap"><div class="fg">
+<div><div class="brand"><svg width="28" height="28" aria-hidden="true"><use href="#logo"/></svg>MoCurse</div><p style="color:var(--tx2);font-size:14px;max-width:280px">Your Minecraft world. Your way.</p></div>
+<div><h4>Platform</h4><a href="#">About</a><a href="#">Help center</a><a href="#">Documentation</a></div>
+<div><h4>Community</h4><a href="#">Community guidelines</a><a href="#">Contact</a></div>
+<div><h4>Legal</h4><a href="#">Terms of service</a><a href="#">Privacy policy</a></div>
+</div>
+<div class="legal">© 2026 MoCurse. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</div></div></footer>
+<dialog id="pub" aria-labelledby="pubt"><form id="pf"><h2 id="pubt">Publish a project</h2><p class="sub">MoCurse lists your project and links to the file where you host it (for example a GitHub release). Hosting the files themselves is not available on this page.</p>
+<label>Project name<input name="n" required maxlength="60"></label>
+<label>Creator name<input name="u" required maxlength="30"></label>
+<div class="two"><label>Type<select name="t"><option value="mod">Mods</option><option value="pack">Modpacks</option><option value="res">Resource Packs</option><option value="shd">Shaders</option><option value="wld">Worlds</option></select></label>
+<label>Minecraft version<select name="v"><option>1.21.11</option><option>1.21</option><option>1.20.4</option><option>1.20.1</option></select></label>
+<label>Loader<select name="l"><option>Fabric</option><option>Forge</option><option>NeoForge</option><option>Quilt</option><option>Iris</option><option>Java</option><option>Bedrock</option></select></label>
+<label>License<select name="lic"><option>MIT</option><option>LGPL-3.0</option><option>CC-BY-4.0</option><option>ARR</option></select></label></div>
+<label>Short description<textarea name="d" required maxlength="200" rows="3"></textarea></label>
+<label>Download link (https)<input name="url" type="url" required placeholder="https://"></label>
+<label>Icon (PNG, JPG or WebP, max 2 MB, optional)<input name="icon" type="file" accept="image/png,image/jpeg,image/webp"></label>
+<p id="pm" role="alert" style="color:var(--err);margin:0;font-size:14px"></p>
+<div class="row"><button type="button" class="btn btn-o btn-sm" id="pcancel">Cancel</button><button class="btn btn-p btn-sm">Publish</button></div></form></dialog>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const T={mod:"Mods",pack:"Modpacks",res:"Resource Packs",shd:"Shaders",wld:"Worlds"};
+const P=[
+{n:"Crystal Realms",t:"wld",u:"Aerith_Builds",d:"An exploration world of floating crystal islands and hidden caves.",dl:482000,f:12400,v:"1.21",l:["Java"],up:2,r:5,c:["#7C3AED","#C084FC"],ver:1},
+{n:"Better Biomes",t:"mod",u:"TerraForge",d:"Reworks terrain generation with richer, more varied biomes.",dl:1250000,f:38200,v:"1.21",l:["Fabric","NeoForge"],up:1,r:9,c:["#34D399","#065F46"],ver:1},
+{n:"Mystic Weapons",t:"mod",u:"RuneSmith",d:"Enchanted weapons with unique abilities and crafting chains.",dl:640000,f:19800,v:"1.20.4",l:["Forge","Quilt"],up:6,r:7,c:["#A855F7","#312E81"],ver:0},
+{n:"Vanilla Enhanced",t:"res",u:"PixelPatch",d:"Subtle 32x touches that keep the vanilla feel.",dl:910000,f:27100,v:"1.21",l:["Java","Bedrock"],up:3,r:8,c:["#F59E0B","#78350F"],ver:1},
+{n:"Aurora Shaders",t:"shd",u:"LumaLabs",d:"Soft volumetric lighting with northern-light skies.",dl:730000,f:24600,v:"1.21",l:["Iris"],up:0,r:10,c:["#22D3EE","#6D28D9"],ver:1},
+{n:"Medieval Kingdoms",t:"pack",u:"CastleCrew",d:"Quest-driven modpack of castles, guilds and trade.",dl:310000,f:9400,v:"1.20.1",l:["Forge"],up:9,r:6,c:["#FB7185","#4C1D95"],ver:0}];
+const C=[["mod","Mods","Gameplay and systems","#A855F7"],["pack","Modpacks","Curated bundles","#7C3AED"],["res","Resource Packs","Textures and sounds","#F59E0B"],["shd","Shaders","Light and atmosphere","#22D3EE"],["wld","Worlds","Maps and adventures","#34D399"],["dat","Data Packs","Vanilla-friendly tweaks","#FB7185"]];
+const CR=[["Aerith_Builds","Builds floating worlds and cinematic maps.",14,"8.2K"],["TerraForge","Worldgen tinkerer focused on biomes.",9,"21K"],["LumaLabs","Shader devs chasing soft, moody light.",5,"12K"]];
+const $=s=>document.querySelector(s),fmt=n=>n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?Math.round(n/1e3)+"K":n;
+let type="all",sort="rel",q="";const favs=new Set();
+const tabs=$("#tabs");[["all","All content"],...Object.entries(T)].forEach(([k,v])=>{const b=document.createElement("button");b.className="tab";b.textContent=v;b.dataset.k=k;b.onclick=()=>{type=k;render()};tabs.append(b)});
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function render(){
+ tabs.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===type));
+ let a=P.filter(p=>(type==="all"||p.t===type)&&(!q||(p.n+p.d+p.u+T[p.t]+p.l.join(" ")).toLowerCase().includes(q)));
+ a.sort((x,y)=>sort==="dl"?y.dl-x.dl:sort==="up"?x.up-y.up:y.r-x.r);
+ $("#grid").innerHTML=a.length?a.map(p=>`<article class="card"><div class="thumb" style="background:linear-gradient(135deg,${p.c[0]},${p.c[1]}),repeating-conic-gradient(rgba(0,0,0,.18) 0 25%,transparent 0 50%) 0 0/28px 28px;background-blend-mode:overlay"><span class="bdg t">${T[p.t]}</span><button class="fav" aria-label="Favorite ${esc(p.n)}" aria-pressed="${favs.has(p.n)}" data-n="${esc(p.n)}">${ic("heart","i-md")}</button></div>
+<div class="cb"><h3>${esc(p.n)}${p.ver?' <span class="vf" role="img" aria-label="Verified (demo)" title="Demo verified badge">${ic("badge-check","i-md")}</span>':""}</h3>
+<div class="by"><span class="av" style="background:${p.c[1]}">${p.u[0]}</span>${esc(p.u)}</div><p>${esc(p.d)}</p>
+<div class="badges"><span class="bdg">${p.v}</span>${p.l.map(x=>`<span class="bdg t">${x}</span>`).join("")}</div>
+<div class="meta"><span title="Downloads">${ic("download")}${fmt(p.dl)}</span><span title="Favorites">${ic("heart")}${fmt(p.f+(favs.has(p.n)?1:0))}</span><span title="Updated">${ic("clock")}${p.up===0?"Today":p.up+"d ago"}</span></div></div></article>`).join(""):`<div class="empty"><b>No projects found</b><br>Try a different search or filter.</div>`;
+}
+$("#grid").onclick=e=>{const b=e.target.closest(".fav");if(!b)return;const n=b.dataset.n;favs.has(n)?favs.delete(n):favs.add(n);toast(favs.has(n)?"Added to favorites (demo)":"Removed from favorites");render()};
+$("#sort").onchange=e=>{sort=e.target.value;render()};
+let tm;$("#q").oninput=e=>{clearTimeout(tm);tm=setTimeout(()=>{q=e.target.value.trim().toLowerCase();render()},200)};
+addEventListener("keydown",e=>{if(e.key==="/"&&document.activeElement.tagName!=="INPUT"&&document.activeElement.tagName!=="SELECT"){e.preventDefault();$("#q").focus()}if(e.key==="Escape")menu(false)});
+const CI={mod:"puzzle",pack:"package",res:"palette",shd:"sun",wld:"mountain",dat:"database"};
+function ic(n,c=""){return `<svg class="i ${c}" aria-hidden="true"><use href="#i-${n}"/></svg>`}
+$("#cats").innerHTML=C.map(c=>`<a class="cat" href="#trending" data-k="${c[0]}"><i>${ic(CI[c[0]],"i-lg")}</i><b>${c[1]}</b><small>${c[2]}</small></a>`).join("");
+$("#cats").onclick=e=>{const a=e.target.closest(".cat");if(a&&T[a.dataset.k]){type=a.dataset.k;render()}};
+$("#cre").innerHTML=CR.map(c=>`<div class="cc"><span class="av" style="background:linear-gradient(135deg,#7C3AED,#C084FC)">${c[0][0]}</span><b>${c[0]}<span class="vf" role="img" aria-label="Verified (demo)">${ic("badge-check")}</span></b><p>${c[1]}</p><div class="meta"><span>${ic("package")}${c[2]} projects</span><span>${ic("user-round")}${c[3]} followers</span></div><button class="btn btn-o btn-sm" data-f="${c[0]}" aria-pressed="false" style="justify-content:center">${ic("user-plus")}Follow</button></div>`).join("");
+$("#cre").onclick=e=>{const b=e.target.closest("[data-f]");if(!b)return;const on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);b.innerHTML=(on?ic("badge-check"):ic("user-plus"))+(on?"Following":"Follow");toast(on?"Following "+b.dataset.f+" (demo)":"Unfollowed")};
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),2200)}
+function menu(o){$("#panel").classList.toggle("open",o);$("#scrim").classList.toggle("open",o);$("#burger").setAttribute("aria-expanded",o)}
+$("#burger").onclick=()=>menu(true);$("#scrim").onclick=()=>menu(false);$("#panel").onclick=e=>{if(e.target.closest("a"))menu(false)};
+function render(){
+ tabs.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===type));
+ let a=P.filter(p=>(type==="all"||p.t===type)&&(!q||(p.n+p.d+p.u+T[p.t]+p.l.join(" ")).toLowerCase().includes(q)));
+ a.sort((x,y)=>sort==="dl"?y.dl-x.dl:sort==="up"?x.up-y.up:y.r-x.r);
+ $("#grid").innerHTML=a.length?a.map(p=>`<article class="pc"><div class="pi" style="background:linear-gradient(135deg,${p.c[0]},${p.c[1]})" role="img" aria-label="${esc(p.n)} icon">${ic(CI[p.t],"i-xl")}</div>
+<div class="pm"><div class="pt"><h3>${esc(p.n)}</h3>${p.ver?`<span class="vf" role="img" aria-label="Verified (demo)" title="Demo verified badge">${ic("badge-check","i-md")}</span>`:""}<span class="by2">by ${esc(p.u)}</span></div>
+<p>${esc(p.d)}</p>
+<div class="tags"><span class="tg">${ic(CI[p.t])}${T[p.t]}</span><span class="tg">${ic("compass")}${p.v}</span>${p.l.map(x=>`<span class="tg">${ic("puzzle")}${x}</span>`).join("")}</div></div>
+<div class="ps"><span class="st">${ic("download")}<b>${fmt(p.dl)}</b> downloads</span><span class="st">${ic("heart")}<b>${fmt(p.f+(favs.has(p.n)?1:0))}</b> followers</span><span class="st">${ic("clock")}${p.up===0?"Updated today":"Updated "+p.up+"d ago"}</span>
+<button class="fav" aria-label="Favorite ${esc(p.n)}" aria-pressed="${favs.has(p.n)}" data-n="${esc(p.n)}">${ic("heart","i-md")}</button></div></article>`).join(""):`<div class="empty"><b>No projects found</b><br>Try a different search or filter.</div>`;
+}
+P.push({n:"Stoneworks",t:"mod",u:"TerraForge",d:"Adds new building blocks and stonecutting recipes for builders.",dl:420000,f:11200,v:"1.20.4",l:["Fabric"],up:4,r:4,c:["#64748B","#312E81"],ver:0,env:"Client and server",lic:"MIT"},
+{n:"Nether Overhaul",t:"mod",u:"RuneSmith",d:"New Nether structures, mobs and progression.",dl:560000,f:15300,v:"1.21",l:["Fabric","Quilt"],up:2,r:6,c:["#EF4444","#4C1D95"],ver:1,env:"Server",lic:"LGPL-3.0"},
+{n:"Pixel Perfect 16x",t:"res",u:"PixelPatch",d:"Clean, readable 16x textures with consistent shading.",dl:380000,f:10100,v:"1.20.4",l:["Java"],up:11,r:3,c:["#10B981","#1E1B4B"],ver:0,env:"Client",lic:"CC-BY-4.0"},
+{n:"Skyline Shaders",t:"shd",u:"LumaLabs",d:"Performance-friendly shaders with bright, crisp skies.",dl:290000,f:8700,v:"1.20.1",l:["Iris"],up:5,r:2,c:["#38BDF8","#4C1D95"],ver:0,env:"Client",lic:"ARR"},
+{n:"Hollow Isles",t:"wld",u:"Aerith_Builds",d:"A survival archipelago with hand-built villages.",dl:150000,f:5200,v:"1.20.4",l:["Java"],up:14,r:1,c:["#14B8A6","#312E81"],ver:0,env:"Client and server",lic:"CC-BY-4.0"},
+{n:"Tech Frontier",t:"pack",u:"CastleCrew",d:"Automation-focused modpack with guided progression.",dl:240000,f:7800,v:"1.21",l:["NeoForge"],up:7,r:5,c:["#F97316","#4C1D95"],ver:0,env:"Client and server",lic:"MIT"});
+const EX={"Crystal Realms":["Client and server","CC-BY-4.0"],"Better Biomes":["Server","MIT"],"Mystic Weapons":["Client and server","LGPL-3.0"],"Vanilla Enhanced":["Client","CC-BY-4.0"],"Aurora Shaders":["Client","ARR"],"Medieval Kingdoms":["Client and server","MIT"]};
+P.forEach(p=>{const e=EX[p.n];if(e){p.env=e[0];p.lic=e[1]}});
+const F={l:new Set(),v:new Set(),env:new Set(),lic:new Set()};let per=6,pageN=1;
+function renderSide(){const cnt=f=>[...new Set(P.flatMap(f))].sort().map(x=>[x,P.filter(p=>f(p).includes(x)).length]);
+const grp=(t,k,o)=>`<fieldset class="fs"><legend>${t}</legend>${o.map(x=>`<label class="ck"><input type="checkbox" data-g="${k}" value="${esc(x[0])}"${F[k].has(x[0])?" checked":""}><span>${esc(x[0])}</span><em>${x[1]}</em></label>`).join("")}</fieldset>`;
+$("#side").innerHTML=`<h3 class="sth">${ic("sliders-horizontal")}Filters</h3>`+grp("Loader","l",cnt(p=>p.l))+grp("Game version","v",cnt(p=>[p.v]))+grp("Environment","env",cnt(p=>[p.env]))+grp("License","lic",cnt(p=>[p.lic]))}
+function render(){
+ tabs.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===type));
+ let a=P.filter(p=>(type==="all"||p.t===type)&&(!q||(p.n+p.d+p.u+T[p.t]+p.l.join(" ")).toLowerCase().includes(q))&&(!F.l.size||p.l.some(x=>F.l.has(x)))&&(!F.v.size||F.v.has(p.v))&&(!F.env.size||F.env.has(p.env))&&(!F.lic.size||F.lic.has(p.lic)));
+ a.sort((x,y)=>sort==="dl"?y.dl-x.dl:sort==="up"?x.up-y.up:y.r-x.r);
+ const pages=Math.max(1,Math.ceil(a.length/per));if(pageN>pages)pageN=pages;
+ const s=a.slice((pageN-1)*per,pageN*per),act=type!=="all"||q||Object.values(F).some(x=>x.size);
+ $("#rbar").innerHTML=`<button class="btn btn-o btn-sm fbtn" data-ft>${ic("sliders-horizontal")}Filters</button><span><b>${a.length}</b> projects</span><span class="sp"></span>${act?`<button class="btn btn-o btn-sm" data-clear>${ic("x")}Clear filters</button>`:""}<label>Show <select id="per"><option${per===6?" selected":""}>6</option><option${per===12?" selected":""}>12</option></select></label>`;
+ $("#grid").innerHTML=s.length?s.map(p=>`<article class="pc"><div class="pi" style="background:linear-gradient(135deg,${p.c[0]},${p.c[1]})" role="img" aria-label="${esc(p.n)} icon">${ic(CI[p.t],"i-xl")}</div>
+<div class="pm"><div class="pt"><h3>${esc(p.n)}</h3>${p.ver?`<span class="vf" role="img" aria-label="Verified (demo)" title="Demo verified badge">${ic("badge-check","i-md")}</span>`:""}<span class="by2">by ${esc(p.u)}</span></div><p>${esc(p.d)}</p>
+<div class="tags"><span class="tg">${ic(CI[p.t])}${T[p.t]}</span><span class="tg">${ic("compass")}${p.v}</span>${p.l.map(x=>`<span class="tg">${ic("puzzle")}${x}</span>`).join("")}</div></div>
+<div class="ps"><span class="st">${ic("download")}<b>${fmt(p.dl)}</b> downloads</span><span class="st">${ic("heart")}<b>${fmt(p.f+(favs.has(p.n)?1:0))}</b> followers</span><span class="st">${ic("clock")}${p.up===0?"Updated today":"Updated "+p.up+"d ago"}</span>
+<button class="fav" aria-label="Favorite ${esc(p.n)}" aria-pressed="${favs.has(p.n)}" data-n="${esc(p.n)}">${ic("heart","i-md")}</button></div></article>`).join(""):`<div class="empty"><b>No projects found</b><br>Try different filters or clear them.</div>`;
+ $("#pager").innerHTML=pages>1?`<button class="tab" data-p="${pageN-1}"${pageN<2?" disabled":""}>Previous</button>`+Array.from({length:pages},(_,i)=>`<button class="tab" data-p="${i+1}" aria-pressed="${i+1===pageN}">${i+1}</button>`).join("")+`<button class="tab" data-p="${pageN+1}"${pageN>=pages?" disabled":""}>Next</button>`:"";
+}
+$("#side").onchange=e=>{const c=e.target;if(!c.dataset.g)return;c.checked?F[c.dataset.g].add(c.value):F[c.dataset.g].delete(c.value);pageN=1;render()};
+$("#rbar").onclick=e=>{if(e.target.closest("[data-clear]")){Object.values(F).forEach(x=>x.clear());q="";$("#q").value="";type="all";pageN=1;renderSide();render()}if(e.target.closest("[data-ft]"))$("#side").classList.toggle("open")};
+$("#rbar").onchange=e=>{if(e.target.id==="per"){per=+e.target.value;pageN=1;render()}};
+$("#pager").onclick=e=>{const b=e.target.closest("[data-p]");if(b&&!b.disabled){pageN=+b.dataset.p;render();$("#trending").scrollIntoView()}};
+renderSide();
+let DB=null,AS=null;
+(async()=>{try{if(typeof claude==="undefined")return;DB=await claude.use("db");AS=await claude.use("assets");if(DB)DB.collection("projects").onSnapshot(s=>{for(let i=P.length-1;i>=0;i--)if(P[i].usr)P.splice(i,1);s.docs.forEach(x=>{const d=x.data()||{};if(!T[d.t]||typeof d.n!=="string")return;P.push({n:d.n.slice(0,60),t:d.t,u:String(d.u||"Community").slice(0,30),d:String(d.d||"").slice(0,200),dl:0,f:0,v:String(d.v||"1.21"),l:[String(d.l||"Java")],up:0,r:0,c:["#A855F7","#4C1D95"],ver:0,env:String(d.env||"Client and server"),lic:String(d.lic||"ARR"),url:/^https:\/\//.test(d.url||"")?d.url:"",icon:/^\/_blob\/[0-9a-f]{32}$/.test(d.icon||"")?d.icon:"",usr:true})});renderSide();render()},()=>{})}catch(e){}})();
+document.addEventListener("click",e=>{const a=e.target.closest("a");if(a&&/^(Publish content|Publish a project|Start creating)$/.test(a.textContent.trim())){e.preventDefault();menu(false);$("#pub").showModal()}});
+$("#pcancel").onclick=()=>$("#pub").close();
+$("#pf").onsubmit=async e=>{e.preventDefault();const f=e.target,m=$("#pm"),g=n=>f.elements[n].value.trim();m.textContent="";
+ if(!DB){m.textContent="Publishing needs a signed-in viewer on the published page.";return}
+ const url=g("url");if(!/^https:\/\/[^\s]+$/.test(url)){m.textContent="The download link must start with https://";return}
+ let icon="";const file=f.elements.icon.files[0];
+ if(file){if(!["image/png","image/jpeg","image/webp"].includes(file.type)||file.size>2*1024*1024){m.textContent="The icon must be a PNG, JPG or WebP under 2 MB.";return}
+  if(!AS){m.textContent="Icon upload is not available for your account.";return}
+  try{const r=await AS.upload(file);icon="/_blob/"+r.id}catch(x){m.textContent="Icon upload failed.";return}}
+ try{await DB.collection("projects").add({n:g("n"),t:g("t"),u:g("u"),d:g("d"),v:g("v"),l:g("l"),env:"Client and server",lic:g("lic"),url,icon,ts:Date.now()});$("#pub").close();f.reset();toast("Project published to MoCurse")}catch(x){m.textContent="Could not save. You may not have permission to publish."}};
+const _r=render;render=function(){_r();document.querySelectorAll("#grid .pc").forEach(c=>{const b=c.querySelector(".fav"),p=P.find(x=>x.n===b.dataset.n);if(!p||!p.usr)return;if(p.icon)c.querySelector(".pi").innerHTML=`<img src="${p.icon}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:16px">`;if(p.url){const a=document.createElement("a");a.className="btn btn-p btn-sm";a.href=p.url;a.target="_blank";a.rel="noopener noreferrer nofollow";a.textContent="Get from author";c.querySelector(".ps").insertBefore(a,b)}})};
+const NAV=[["compass","Discover","#trending"],["puzzle","Mods","#trending"],["package","Modpacks","#trending"],["palette","Resource Packs","#trending"],["sun","Shaders","#trending"],["mountain","Worlds","#trending"],["server","Servers","#"]];
+$("#links").innerHTML=NAV.map((n,i)=>`<a${i?"":' class="on"'} href="${n[2]}">${ic(n[0])}${n[1]}</a>`).join("");
+$("#panel").innerHTML=`<button class="pclose" id="pclose" aria-label="Close menu">${ic("x","i-md")}</button>`+NAV.map(n=>`<a href="${n[2]}">${ic(n[0],"i-md")}${n[1]}</a>`).join("")+`<a href="#">${ic("log-in","i-md")}Sign in</a><a class="btn btn-p" href="#" style="margin-top:10px;color:#fff;justify-content:center">${ic("upload","i-md")}Publish content</a>`;
+$("#pclose").onclick=()=>menu(false);
+render();
+</script>
+</body>
+</html>
